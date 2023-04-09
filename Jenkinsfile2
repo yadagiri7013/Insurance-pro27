@@ -44,6 +44,11 @@ pipeline {
         sh 'docker push cbabu85/insureprojectdec3:latest'
             }
     }
+    stage('Deploy Application using Ansible') {
+      steps {
+        ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml'
+            }
+    }
 
   }
 }
