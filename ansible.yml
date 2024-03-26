@@ -15,4 +15,6 @@
     command: sudo systemctl start docker
     become: yes
     become_user: root
-    
+
+  - name: Deploy the Image and Run as Container
+    command: docker run -itd -p 8084:8081 cbabu85/insure-me-app:4.0
