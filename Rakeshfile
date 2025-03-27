@@ -56,15 +56,16 @@ pipeline {
                 }
             }
         }
-        stage('Ansible config and Deployment') {
+         stage('Ansible config and Deployment') {
             steps {
                 echo 'Running Ansible Playbook for deployment'
-                ansiblePlaybook  credentialsId: 'ansible-ssh', 
-                                disableHostKeyChecking: true, 
-                                installation: 'ansible', 
-                                inventory: '/etc/ansible/hosts', 
-                                playbook: 'ansible-playbook.yml', 
-                                vaultTmpPath: ''
+                withEnv(['ANSIBLE_HOST_KEY_CHECKING=false']) {  // Disable SSH host key checking
+                    ansiblePlaybook  credentialsId: 'ansible-ssh', 
+                                    disableHostKeyChecking: true, 
+                                    installation: 'ansible', 
+                                    inventory: '/etc/ansible/hosts', 
+                                    playbook: 'ansible-playbook.yml', 
+                                    vaultTmpPath: ''
             }
         }
     }
