@@ -59,7 +59,7 @@ pipeline {
         stage('Ansible config and Deployment') {
             steps {
                 echo 'Running Ansible Playbook for deployment'
-                ansiblePlaybook credentialsId: 'ansible-ssh', 
+                ansiblePlaybook  
                                 disableHostKeyChecking: true, 
                                 installation: 'ansible', 
                                 inventory: '/etc/ansible/hosts', 
