@@ -60,7 +60,7 @@ pipeline {
             steps {
                 echo 'Running Ansible Playbook for deployment'
                 ansiblePlaybook  
-                                disableHostKeyChecking: true, 
+                                
                                 installation: 'ansible', 
                                 inventory: '/etc/ansible/hosts', 
                                 playbook: 'ansible-playbook.yml', 
