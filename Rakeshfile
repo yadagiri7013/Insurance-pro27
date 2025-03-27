@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'M2_HOME'
+        maven 'M2_HOME'  // Ensure this is correctly set in Jenkins
     }
     stages {
         stage('Git checkout') {
@@ -22,7 +22,7 @@ pipeline {
                 publishHTML([allowMissing: false, 
                              alwaysLinkToLastBuild: false, 
                              keepAll: false, 
-                             reportDir: '/var/lib/jenkins/workspace/Capstone-Project-Live-Demo/target/surefire-reports', 
+                             reportDir: "${workspace}/target/surefire-reports", 
                              reportFiles: 'index.html', 
                              reportName: 'HTML Report', 
                              reportTitles: '', 
@@ -51,6 +51,7 @@ pipeline {
                     // Define the tag dynamically based on the build number
                     def tagname = "v${env.BUILD_NUMBER}"  // Using the Jenkins environment variable BUILD_NUMBER
                     echo "Pushing Docker image with tag: ${tagname}"
+                    sh "docker tag yadagiri14/insurance:latest yadagiri14/insurance:${tagname}"
                     sh "docker push yadagiri14/insurance:${tagname}"
                 }
             }
