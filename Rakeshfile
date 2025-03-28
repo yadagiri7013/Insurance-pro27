@@ -10,6 +10,12 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/yadagiri7013/insurance-project.git'
             }
         }
+        stage('Verify files') {
+            steps {
+                echo 'Listing files in workspace to check if deploy.yml exists'
+                sh 'ls -l'  // This will list the files in the workspace
+            }
+        }
         stage('Create a Package') {
             steps {
                 echo 'Creating a package using Maven'
@@ -37,11 +43,7 @@ pipeline {
         }
         stage('Login to Dockerhub') {
             steps {
-               // withCredentials([usernamePassword(credentialsId: 'docker-id', 
-                                                 // passwordVariable: 'dockerPass', 
-                                                 // usernameVariable: 'dockerUser')]) {
-withCredentials([usernamePassword(credentialsId: 'docker-id-user', passwordVariable: 'dockerPass', usernameVariable: 'dockerUser')]) {
-    
+                withCredentials([usernamePassword(credentialsId: 'docker-id-user', passwordVariable: 'dockerPass', usernameVariable: 'dockerUser')]) {
                     echo 'Logging in to Dockerhub'
                     sh 'docker login -u ${dockerUser} -p ${dockerPass}'
                 }
@@ -58,19 +60,22 @@ withCredentials([usernamePassword(credentialsId: 'docker-id-user', passwordVaria
                 }
             }
         }
-         stage('Ansible config and Deployment') {
+        stage('Check Current Directory') {
+            steps {
+                echo 'Printing the current working directory'
+                sh 'pwd'  // This will print the current directory where Ansible is running
+            }
+        }
+        stage('Ansible config and Deployment') {
             steps {
                 echo 'Running Ansible Playbook for deployment'
-               //ansiblePlaybook credentialsId: 'sshkey', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml', vaultTmpPath: ''
-//ansiblePlaybook become: true, credentialsId: 'sshkey', disableHostKeyChecking: true, installation: 'ansible', inventory: 'deploy.yml', playbook: '', vaultTmpPath: ''
-//ansiblePlaybook credentialsId: 'sshkey', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml', vaultTmpPath: ''
-ansiblePlaybook credentialsId: 'sshkey', 
-                disableHostKeyChecking: true, 
-                installation: 'ansible', 
-                inventory: '/etc/ansible/hosts', 
-                playbook: 'deploy.yml', // This is correct if it's at the root of the repo
-                vaultTmpPath: ''
-}
+                ansiblePlaybook credentialsId: 'sshkey', 
+                                disableHostKeyChecking: true, 
+                                installation: 'ansible', 
+                                inventory: '/etc/ansible/hosts', 
+                                playbook: 'deploy.yml',  // Ensure this path is correct
+                                vaultTmpPath: ''
+            }
         }
     }
     post {
