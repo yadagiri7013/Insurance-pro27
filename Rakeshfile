@@ -39,10 +39,11 @@ pipeline {
         stage('Push the Docker image') {
             steps {
                 script {
-                    def tagname = "v${env.BUILD_NUMBER}"  // Using the Jenkins environment variable BUILD_NUMBER
+                   // def tagname = "v${env.BUILD_NUMBER}"  // Using the Jenkins environment variable BUILD_NUMBER
                     echo "Pushing Docker image with tag: ${tagname}"
-                    sh "docker tag yadagiri14/insurance:latest yadagiri14/insurance:${tagname}"
-                    sh "docker push yadagiri14/insurance:${tagname}"
+                   // sh "docker tag yadagiri14/insurance:latest yadagiri14/insurance:${tagname}"
+                   // sh "docker push yadagiri14/insurance:${tagname}"
+sh "docker tag yadagiri14/insurance:latest
                 }
             }
         }
