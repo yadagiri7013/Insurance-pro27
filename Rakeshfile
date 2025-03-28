@@ -61,7 +61,8 @@ withCredentials([usernamePassword(credentialsId: 'docker-id-user', passwordVaria
          stage('Ansible config and Deployment') {
             steps {
                 echo 'Running Ansible Playbook for deployment'
-               ansiblePlaybook credentialsId: 'sshkey', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml', vaultTmpPath: ''
+               //ansiblePlaybook credentialsId: 'sshkey', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml', vaultTmpPath: ''
+ansiblePlaybook become: true, credentialsId: 'sshkey', disableHostKeyChecking: true, installation: 'ansible', inventory: 'deploy.yml', playbook: '', vaultTmpPath: ''
 }
         }
     }
