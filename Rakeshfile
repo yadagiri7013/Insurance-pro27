@@ -43,7 +43,7 @@ pipeline {
                     echo "Pushing Docker image with tag: ${tagname}"
                    // sh "docker tag yadagiri14/insurance:latest yadagiri14/insurance:${tagname}"
                    // sh "docker push yadagiri14/insurance:${tagname}"
-sh "docker tag yadagiri14/insurance:latest
+sh "docker tag yadagiri14/insurance:latest"
                 }
             }
         }
