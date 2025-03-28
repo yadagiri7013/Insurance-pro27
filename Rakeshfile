@@ -16,23 +16,15 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-        stage('Publish test reports') {
-            steps {
-                echo 'Publishing test reports (HTML) from surefire reports'
-                publishHTML([allowMissing: false, 
-                             alwaysLinkToLastBuild: false, 
-                             keepAll: false, 
-                             reportDir: "${workspace}/target/surefire-reports", 
-                             reportFiles: 'index.html', 
-                             reportName: 'HTML Report', 
-                             reportTitles: '', 
-                             useWrapperFileDirectly: true])
+       stage('Publish the HTML Reports') {
+      steps {
+          publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/insurance_project/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                        }
             }
-        }
         stage('Create a Docker image from the Package Insure-Me.jar file') {
             steps {
                 echo 'Building Docker image'
-                sh 'docker build -t yadagiri14/insurance:v22.'
+                sh 'docker build -t yadagiri14/insurance:latest.'
             }
         }
         stage('Login to Dockerhub') {
