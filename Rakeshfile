@@ -32,7 +32,7 @@ pipeline {
         stage('Create a Docker image from the Package Insure-Me.jar file') {
             steps {
                 echo 'Building Docker image'
-                sh 'docker build -t yadagiri14/insurance:latest .'
+                sh 'docker build -t yadagiri14/insurance:v22.'
             }
         }
         stage('Login to Dockerhub') {
