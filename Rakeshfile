@@ -24,7 +24,7 @@ pipeline {
         stage('Create a Docker image from the Package Insure-Me.jar file') {
             steps {
                 echo 'Building Docker image'
-                // Fixed the docker build command by removing the extra '.'
+                // Build the Docker image with 'latest' tag
                 sh 'docker build -t yadagiri14/insurance:latest .'
             }
         }
@@ -39,11 +39,9 @@ pipeline {
         stage('Push the Docker image') {
             steps {
                 script {
-                   // def tagname = "v${env.BUILD_NUMBER}"  // Using the Jenkins environment variable BUILD_NUMBER
-                    echo "Pushing Docker image with tag: ${tagname}"
-                   // sh "docker tag yadagiri14/insurance:latest yadagiri14/insurance:${tagname}"
-                   // sh "docker push yadagiri14/insurance:${tagname}"
-sh "docker tag yadagiri14/insurance:latest"
+                    echo "Pushing Docker image with the 'latest' tag"
+                    // Push the image with the 'latest' tag to Docker Hub
+                    sh "docker push yadagiri14/insurance:latest"
                 }
             }
         }
