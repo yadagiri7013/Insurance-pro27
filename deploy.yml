@@ -18,5 +18,4 @@
     become: yes
     become_user: root
   - name: Deploy the Image from DockerHub and Run as Container
-    command: docker run -itd -p 9084:8081 yadagiri14/insurance:v19
-
+    command: docker run -itd -p 9084:8081 yadagiri14/insurance
